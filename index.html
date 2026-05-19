@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ – Lei nº 8.112/1990 | Estatuto dos Servidores Públicos Federais</title>
+  <style>
+    :root {
+      --primary: #1a3a6e;
+      --primary-light: #2a5298;
+      --accent: #f5a623;
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1e2a3a;
+      --text-muted: #5a6a7e;
+      --border: #dce3ef;
+      --tag-bg: #e8edf8;
+      --shadow: 0 2px 12px rgba(26,58,110,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ── Search ── */
+    .search-wrap {
+      max-width: 700px;
+      margin: -24px auto 0;
+      padding: 0 16px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 48px 14px 20px;
+      border-radius: 40px;
+      border: 2px solid var(--border);
+      font-size: 1rem;
+      box-shadow: var(--shadow);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-wrap input:focus { border-color: var(--primary-light); }
+
+    .search-wrap .icon {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+    }
+
+    /* ── Category nav ── */
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+      margin-top: 8px;
+    }
+
+    .cat-btn {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      color: var(--text);
+    }
+
+    .cat-btn:hover,
+    .cat-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 36px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-header .emoji { font-size: 1.4rem; }
+
+    .section-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FAQ Item ── */
+    .faq-item {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+
+    .faq-item.open { border-color: var(--primary-light); }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary .q-text {
+      font-weight: 600;
+      font-size: 0.97rem;
+      flex: 1;
+    }
+
+    .faq-item summary .chevron {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      transition: transform 0.25s, background 0.2s;
+      margin-top: 2px;
+    }
+
+    .faq-item[open] summary .chevron {
+      transform: rotate(180deg);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .faq-body {
+      padding: 0 20px 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-body p { margin-top: 12px; font-size: 0.95rem; color: var(--text); }
+    .faq-body ul { margin-top: 10px; padding-left: 20px; }
+    .faq-body ul li { margin-bottom: 6px; font-size: 0.93rem; }
+
+    .art-tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--primary);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      margin-top: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.85rem;
+    }
+
+    footer strong { color: #fff; }
+
+    /* ── No results ── */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 48px 0;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 36px 16px 32px; }
+      .faq-item summary { padding: 14px 16px; }
+      .faq-body { padding: 0 16px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Legislação Federal</div>
+  <h1>Lei nº 8.112/1990 — FAQ</h1>
+  <p>Perguntas e respostas sobre o Estatuto dos Servidores Públicos Civis da União</p>
+</header>
+
+<div class="search-wrap">
+  <input type="text" id="search" placeholder="Buscar pergunta ou palavra-chave…" />
+  <span class="icon">🔍</span>
+</div>
+
+<main>
+
+  <div class="categories" id="cats">
+    <button class="cat-btn active" data-cat="all">Todos</button>
+    <button class="cat-btn" data-cat="admissao">Admissão</button>
+    <button class="cat-btn" data-cat="remuneracao">Remuneração</button>
+    <button class="cat-btn" data-cat="jornada">Jornada</button>
+    <button class="cat-btn" data-cat="ferias">Férias</button>
+    <button class="cat-btn" data-cat="licencas">Licenças</button>
+    <button class="cat-btn" data-cat="afastamento">Afastamentos</button>
+    <button class="cat-btn" data-cat="direitos">Direitos</button>
+    <button class="cat-btn" data-cat="deveres">Deveres</button>
+    <button class="cat-btn" data-cat="disciplinar">Disciplinar</button>
+    <button class="cat-btn" data-cat="aposentadoria">Aposentadoria</button>
+  </div>
+
+  <div id="no-results">
+    <p style="font-size:2rem">🔍</p>
+    <p>Nenhum resultado encontrado. Tente outro termo.</p>
+  </div>
+
+  <!-- ── ADMISSÃO ── -->
+  <div class="section" data-cat="admissao">
+    <div class="section-header">
+      <span class="emoji">📋</span>
+      <h2>Admissão e Provimento de Cargos</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Como se dá o ingresso no serviço público federal?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O ingresso em cargo público efetivo depende de <strong>aprovação prévia em concurso público</strong> de provas ou de provas e títulos, obedecida a ordem de classificação e o prazo de validade do concurso.</p>
+        <p>O prazo de validade do concurso público não pode ser superior a 2 anos, prorrogável uma vez por igual período.</p>
+        <span class="art-tag">Arts. 10, 11 e 12</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são as formas de provimento de cargo público?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>São formas de provimento:</p>
+        <ul>
+          <li><strong>Nomeação</strong> – para cargo efetivo ou em comissão</li>
+          <li><strong>Promoção</strong> – ascensão ao cargo imediatamente superior</li>
+          <li><strong>Readaptação</strong> – investidura em cargo compatível com limitação física ou mental</li>
+          <li><strong>Reversão</strong> – retorno à atividade de servidor aposentado</li>
+          <li><strong>Aproveitamento</strong> – retorno de servidor em disponibilidade</li>
+          <li><strong>Reintegração</strong> – retorno de servidor demitido por decisão administrativa ou judicial</li>
+          <li><strong>Recondução</strong> – retorno ao cargo anteriormente ocupado</li>
+        </ul>
+        <span class="art-tag">Art. 8º</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é o estágio probatório e qual é a sua duração?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O estágio probatório é o período de avaliação do servidor recém-nomeado para cargo efetivo. Durante ele são avaliados: assiduidade, disciplina, capacidade de iniciativa, produtividade e responsabilidade.</p>
+        <p>A duração é de <strong>3 anos</strong> (36 meses), coincidindo com o período de aquisição da estabilidade.</p>
+        <span class="art-tag">Art. 20</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quando o servidor adquire estabilidade no serviço público?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O servidor nomeado para cargo de provimento efetivo adquire <strong>estabilidade após 3 anos de efetivo exercício</strong>. Após a estabilidade, o servidor só pode perder o cargo:</p>
+        <ul>
+          <li>Em virtude de sentença judicial transitada em julgado</li>
+          <li>Mediante processo administrativo disciplinar (com ampla defesa)</li>
+          <li>Por procedimento de avaliação periódica de desempenho</li>
+        </ul>
+        <span class="art-tag">Arts. 21 e 22</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que acontece se o servidor não for aprovado no estágio probatório?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O servidor que não satisfizer as condições do estágio probatório será <strong>exonerado</strong> ou, se estável, reconduzido ao cargo anteriormente ocupado. A exoneração depende de parecer de comissão específica e assegurada ampla defesa.</p>
+        <span class="art-tag">Art. 20, §§ 1º e 2º</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── REMUNERAÇÃO ── -->
+  <div class="section" data-cat="remuneracao">
+    <div class="section-header">
+      <span class="emoji">💰</span>
+      <h2>Remuneração e Vencimentos</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Qual é a diferença entre vencimento, remuneração e subsídio?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p><strong>Vencimento</strong> é a retribuição pecuniária pelo exercício de cargo público, com valor fixado em lei.</p>
+        <p><strong>Remuneração</strong> é o vencimento do cargo efetivo acrescido das vantagens pecuniárias permanentes estabelecidas em lei.</p>
+        <p><strong>Subsídio</strong> é a parcela única de retribuição, vedado acréscimo de qualquer gratificação, adicional, abono ou prêmio (aplicável a algumas categorias específicas).</p>
+        <span class="art-tag">Arts. 40 e 41</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são as vantagens pecuniárias previstas na lei?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O servidor pode fazer jus às seguintes vantagens:</p>
+        <ul>
+          <li><strong>Indenizações</strong>: ajuda de custo, diárias, transporte, auxílio-moradia</li>
+          <li><strong>Gratificações e adicionais</strong>: de atividade penosa, insalubre ou perigosa; noturna; de encargos especiais; adicional por serviço extraordinário; adicional de férias (1/3)</li>
+        </ul>
+        <p>As indenizações não se incorporam ao vencimento para nenhum efeito.</p>
+        <span class="art-tag">Arts. 49 a 79</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito a 13º salário?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. O servidor tem direito à <strong>Gratificação Natalina (13º)</strong>, correspondente a 1/12 da remuneração por mês trabalhado no ano, calculada com base na remuneração do mês de dezembro. É paga até o dia 20 de dezembro de cada ano.</p>
+        <span class="art-tag">Art. 63</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito a hora extra?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. O serviço extraordinário (hora extra) é remunerado com <strong>acréscimo de 50%</strong> em relação à hora normal de trabalho. Só é permitido para atender situações excepcionais e temporárias, pelo prazo máximo de 2 horas por jornada.</p>
+        <span class="art-tag">Arts. 73 e 74</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é o adicional noturno e quando é devido?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O adicional noturno é devido ao servidor que prestar serviço entre <strong>22h de um dia e 5h do dia seguinte</strong>. O valor corresponde a um adicional de <strong>25%</strong> sobre o valor da hora diurna. A hora noturna é computada como 52 minutos e 30 segundos.</p>
+        <span class="art-tag">Art. 75</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── JORNADA ── -->
+  <div class="section" data-cat="jornada">
+    <div class="section-header">
+      <span class="emoji">🕐</span>
+      <h2>Jornada de Trabalho</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Qual é a jornada de trabalho do servidor público federal?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A jornada de trabalho é de <strong>até 40 horas semanais</strong>, observados os limites mínimos e máximos estabelecidos para cada cargo ou carreira. Pode ser fixada em 6 horas para trabalho realizado em turnos ininterruptos.</p>
+        <span class="art-tag">Art. 19</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">É possível acumulação de cargos públicos?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A CF/88 e a Lei 8.112 proíbem a acumulação remunerada de cargos, exceto quando houver compatibilidade de horários e nos seguintes casos:</p>
+        <ul>
+          <li>2 cargos de professor</li>
+          <li>1 cargo de professor + 1 técnico ou científico</li>
+          <li>2 cargos ou empregos privativos de profissionais de saúde com profissões regulamentadas</li>
+        </ul>
+        <span class="art-tag">Art. 118</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── FÉRIAS ── -->
+  <div class="section" data-cat="ferias">
+    <div class="section-header">
+      <span class="emoji">🏖️</span>
+      <h2>Férias</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quantos dias de férias o servidor tem direito?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O servidor tem direito a <strong>30 dias de férias</strong> por ano de exercício. Após o primeiro ano de exercício, as férias podem ser parceladas em até <strong>3 etapas</strong>, desde que assim requeridas pelo servidor e no interesse da Administração.</p>
+        <span class="art-tag">Arts. 77 e 79</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito a adicional de férias?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. O servidor receberá, durante as férias, <strong>remuneração acrescida de 1/3</strong> (um terço) da remuneração do período, conforme previsto na Constituição Federal e regulamentado pela Lei 8.112.</p>
+        <span class="art-tag">Art. 78</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">As férias podem ser acumuladas?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Em regra, não. As férias não podem ser acumuladas, salvo por necessidade do serviço devidamente justificada pela autoridade máxima do órgão. Nesse caso, é permitida a acumulação de até <strong>2 períodos</strong> em casos excepcionais.</p>
+        <span class="art-tag">Art. 77, § 2º</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quando as férias podem ser interrompidas?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>As férias somente podem ser interrompidas por <strong>motivo de calamidade pública, comoção interna, convocação para júri, serviço militar ou eleitoral</strong>, ou por outro motivo de excepcional interesse público. O restante será gozado de uma só vez dentro do ano.</p>
+        <span class="art-tag">Art. 80</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── LICENÇAS ── -->
+  <div class="section" data-cat="licencas">
+    <div class="section-header">
+      <span class="emoji">📄</span>
+      <h2>Licenças</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são as licenças previstas na Lei 8.112?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A lei prevê as seguintes licenças:</p>
+        <ul>
+          <li>Por motivo de doença em pessoa da família</li>
+          <li>Por motivo de afastamento do cônjuge ou companheiro</li>
+          <li>Para o serviço militar</li>
+          <li>Para atividade política</li>
+          <li>Para capacitação (aperfeiçoamento profissional)</li>
+          <li>Para tratar de interesses particulares</li>
+          <li>Para desempenho de mandato classista</li>
+        </ul>
+        <span class="art-tag">Art. 81</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Qual é a duração da licença à gestante e ao pai (paternidade)?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p><strong>Licença-maternidade (gestante/adotante):</strong> 120 dias consecutivos, podendo ser ampliada para <strong>180 dias</strong> pelos órgãos da Administração Pública Federal (prorrogação prevista em legislação específica). Inicia até 28 dias antes do parto.</p>
+        <p><strong>Licença-paternidade:</strong> <strong>5 dias</strong> consecutivos a partir do nascimento do filho, podendo ser prorrogada por mais <strong>15 dias</strong> nos órgãos federais que aderirem ao programa (totalizando 20 dias).</p>
+        <span class="art-tag">Arts. 207 e 208</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor pode tirar licença para tratar de interesse particular?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. Após 3 anos de efetivo exercício, o servidor estável pode obter licença, por até <strong>3 anos consecutivos</strong>, para tratar de interesses particulares, sem remuneração. A critério da Administração, a licença pode ser interrompida a qualquer momento.</p>
+        <span class="art-tag">Art. 91</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito a licença por motivo de doença em familiar?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. O servidor pode obter licença, <strong>com remuneração</strong>, por motivo de doença do cônjuge ou companheiro, pais, filhos, padrasto ou madrasta, enteado ou dependente inscrito no sistema de saúde do servidor, mediante comprovação por perícia médica.</p>
+        <p>Duração: até 60 dias, prorrogável por mais 60 dias, em caráter excepcional.</p>
+        <span class="art-tag">Art. 83</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é a licença para capacitação?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A cada 5 anos de efetivo exercício, o servidor pode afastar-se do cargo efetivo, com remuneração, por até <strong>3 meses</strong>, para participar de curso de capacitação profissional. É concedida no interesse da Administração.</p>
+        <span class="art-tag">Art. 87</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── AFASTAMENTOS ── -->
+  <div class="section" data-cat="afastamento">
+    <div class="section-header">
+      <span class="emoji">✈️</span>
+      <h2>Afastamentos</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são os afastamentos previstos na lei?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Os principais afastamentos são:</p>
+        <ul>
+          <li>Para servir a outro órgão ou entidade</li>
+          <li>Para exercício de mandato eletivo (federal, estadual, distrital ou municipal)</li>
+          <li>Para estudo ou missão no exterior</li>
+          <li>Para participação em programa de pós-graduação stricto sensu no País</li>
+          <li>Para desempenho de mandato em confederação, federação ou associação de classe de âmbito nacional</li>
+        </ul>
+        <span class="art-tag">Arts. 93 a 103</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que ocorre com o servidor quando é eleito para mandato eletivo?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O servidor afastar-se-á do cargo, em caso de:</p>
+        <ul>
+          <li><strong>Mandato federal, estadual ou distrital</strong>: afastamento obrigatório, sem remuneração do cargo efetivo (recebe o subsídio do mandato)</li>
+          <li><strong>Mandato municipal</strong>: pode optar pela remuneração do cargo efetivo ou pelo subsídio do mandato, se compatível o horário</li>
+          <li><strong>Vereador em município de até 10.000 hab.</strong>: pode acumular o exercício do cargo com o mandato, se houver compatibilidade de horários</li>
+        </ul>
+        <span class="art-tag">Art. 94</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── DIREITOS ── -->
+  <div class="section" data-cat="direitos">
+    <div class="section-header">
+      <span class="emoji">⚖️</span>
+      <h2>Direitos e Benefícios</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são os principais direitos do servidor público federal?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Entre os principais direitos estão:</p>
+        <ul>
+          <li>Salário mínimo como piso remuneratório</li>
+          <li>Irredutibilidade de vencimentos</li>
+          <li>13º salário (Gratificação Natalina)</li>
+          <li>Férias anuais remuneradas (30 dias + 1/3)</li>
+          <li>Licença-gestante de 120 a 180 dias</li>
+          <li>Licença-paternidade</li>
+          <li>Licença para tratamento de saúde</li>
+          <li>Aposentadoria (regras próprias do RPPS)</li>
+          <li>Assistência à saúde, pré-escolar, social e à dependência</li>
+          <li>Associação sindical e direito de petição</li>
+        </ul>
+        <span class="art-tag">Arts. 40 a 115</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito a auxílio-alimentação e transporte?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. O servidor faz jus ao <strong>auxílio-alimentação</strong> (pago mensalmente, sem incorporação ao vencimento) e ao <strong>auxílio-transporte</strong> para custeio parcial das despesas com deslocamento residência-trabalho-residência, mediante uso de transporte coletivo. Ambos são indenizatórios e não têm natureza salarial.</p>
+        <span class="art-tag">Arts. 58 e 60-A</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é o auxílio-funeral e quando é pago?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O <strong>auxílio-funeral</strong> é concedido à família do servidor falecido na atividade. Equivale a 1 mês de remuneração. No caso de falecimento de cônjuge, companheiro, filho ou pais que viviam às expensas do servidor, o valor é igual a metade da remuneração.</p>
+        <span class="art-tag">Arts. 226 e 227</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor tem direito à progressão funcional?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sim. A progressão funcional é a elevação do servidor a padrão de vencimento imediatamente superior dentro da mesma classe, observados os requisitos de tempo de efetivo exercício e desempenho, conforme os planos de carreira de cada órgão/entidade.</p>
+        <span class="art-tag">Art. 10 c/c planos de carreira</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── DEVERES ── -->
+  <div class="section" data-cat="deveres">
+    <div class="section-header">
+      <span class="emoji">📌</span>
+      <h2>Deveres e Proibições</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são os principais deveres do servidor público?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>São deveres do servidor, entre outros:</p>
+        <ul>
+          <li>Exercer com zelo e dedicação as atribuições do cargo</li>
+          <li>Ser leal às instituições a que serve</li>
+          <li>Observar as normas legais e regulamentares</li>
+          <li>Cumprir as ordens superiores, exceto quando manifestamente ilegais</li>
+          <li>Atender com presteza ao público e às requisições para instrução de processos</li>
+          <li>Guardar sigilo sobre assuntos da repartição</li>
+          <li>Manter conduta compatível com a moralidade administrativa</li>
+          <li>Ser assíduo e pontual</li>
+        </ul>
+        <span class="art-tag">Art. 116</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é proibido ao servidor público?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>São proibições ao servidor, entre outras:</p>
+        <ul>
+          <li>Ausentar-se do serviço durante o expediente sem autorização</li>
+          <li>Retirar documentos e objetos da repartição sem autorização</li>
+          <li>Recusar fé a documentos públicos</li>
+          <li>Opor resistência injustificada ao andamento de documentos</li>
+          <li>Coagir ou aliciar subordinados para fins político-partidários</li>
+          <li>Cometer a pessoa estranha à repartição atribuição conferida ao cargo</li>
+          <li>Exercer quaisquer atividades que sejam incompatíveis com o exercício do cargo</li>
+          <li>Receber propina, comissão, presente ou vantagem de qualquer espécie</li>
+        </ul>
+        <span class="art-tag">Art. 117</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O servidor pode exercer atividade privada remunerada?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Em regra, é <strong>vedado</strong> ao servidor participar de gerência ou administração de empresa privada ou exercer o comércio, salvo como acionista, cotista ou comanditário. A dedicação ao cargo é a regra, admitindo-se exceções nos casos de acumulação lícita (professor, profissional de saúde, etc.).</p>
+        <span class="art-tag">Art. 117, X</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── DISCIPLINAR ── -->
+  <div class="section" data-cat="disciplinar">
+    <div class="section-header">
+      <span class="emoji">⚠️</span>
+      <h2>Responsabilidade e Processo Disciplinar</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são as penalidades disciplinares previstas?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>As penalidades disciplinares são, em ordem crescente de gravidade:</p>
+        <ul>
+          <li><strong>Advertência</strong> – para infrações de menor gravidade</li>
+          <li><strong>Suspensão</strong> – por até 90 dias</li>
+          <li><strong>Demissão</strong></li>
+          <li><strong>Cassação de aposentadoria ou disponibilidade</strong></li>
+          <li><strong>Destituição de cargo em comissão</strong></li>
+          <li><strong>Destituição de função comissionada</strong></li>
+        </ul>
+        <span class="art-tag">Art. 127</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais infrações levam à demissão do servidor?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Sujeitam o servidor à demissão, entre outras infrações:</p>
+        <ul>
+          <li>Crime contra a Administração Pública</li>
+          <li>Abandono de cargo (mais de 30 dias consecutivos de ausência)</li>
+          <li>Inassiduidade habitual (falta injustificada ao serviço por 60 dias, interpoladamente, em 12 meses)</li>
+          <li>Improbidade administrativa</li>
+          <li>Incontinência pública e conduta escandalosa na repartição</li>
+          <li>Insubordinação grave em serviço</li>
+          <li>Ofensa física em serviço a servidor ou particular</li>
+          <li>Aplicação irregular de dinheiros públicos</li>
+          <li>Revelação de segredo do qual se apropriou em razão do cargo</li>
+          <li>Corrupção passiva</li>
+        </ul>
+        <span class="art-tag">Art. 132</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Como funciona o Processo Administrativo Disciplinar (PAD)?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O PAD é instaurado por portaria da autoridade competente e conduzido por <strong>comissão de 3 servidores estáveis</strong>. Possui 3 fases:</p>
+        <ul>
+          <li><strong>Instauração</strong>: publicação da portaria de instauração</li>
+          <li><strong>Inquérito administrativo</strong>: instrução (até 60 dias, prorrogável por mais 60), indiciamento, defesa escrita (10 dias) e relatório</li>
+          <li><strong>Julgamento</strong>: pela autoridade competente, em 20 dias após recebimento do relatório</li>
+        </ul>
+        <p>São assegurados ao acusado o <strong>contraditório e a ampla defesa</strong>, incluindo a defesa técnica por advogado.</p>
+        <span class="art-tag">Arts. 148 a 182</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Qual é o prazo de prescrição das infrações disciplinares?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>O prazo prescricional das infrações disciplinares é:</p>
+        <ul>
+          <li><strong>5 anos</strong> – para infrações puníveis com demissão, cassação de aposentadoria/disponibilidade ou destituição de cargo em comissão</li>
+          <li><strong>2 anos</strong> – para infrações puníveis com suspensão</li>
+          <li><strong>180 dias</strong> – para infrações puníveis com advertência</li>
+        </ul>
+        <p>O prazo começa a correr da data em que o fato se tornou conhecido.</p>
+        <span class="art-tag">Art. 142</span>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── APOSENTADORIA ── -->
+  <div class="section" data-cat="aposentadoria">
+    <div class="section-header">
+      <span class="emoji">🏛️</span>
+      <h2>Aposentadoria e Vacância</h2>
+    </div>
+
+    <details class="faq-item">
+      <summary><span class="q-text">Quais são as modalidades de aposentadoria previstas?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A Lei 8.112 remete às regras constitucionais. As principais modalidades são:</p>
+        <ul>
+          <li><strong>Voluntária</strong>: cumpridos os requisitos de idade e tempo de contribuição estabelecidos pelo RPPS (Regime Próprio de Previdência Social)</li>
+          <li><strong>Por invalidez permanente</strong>: quando o servidor for julgado incapaz para o serviço público em caráter definitivo (proventos integrais se decorrer de acidente em serviço, moléstia profissional ou doença grave)</li>
+          <li><strong>Compulsória</strong>: aos 75 anos de idade (EC 88/2015)</li>
+        </ul>
+        <span class="art-tag">Arts. 186 a 192</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é a vacância de cargo e quais são suas causas?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A vacância é a ausência de titular no cargo. As causas são:</p>
+        <ul>
+          <li>Exoneração (a pedido ou de ofício)</li>
+          <li>Demissão</li>
+          <li>Promoção</li>
+          <li>Readaptação</li>
+          <li>Aposentadoria</li>
+          <li>Posse em outro cargo inacumulável</li>
+          <li>Falecimento</li>
+        </ul>
+        <span class="art-tag">Art. 33</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é disponibilidade e como funciona?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>Disponibilidade é a situação do servidor estável cujo cargo foi extinto ou declarado desnecessário. O servidor fica em disponibilidade com <strong>remuneração proporcional ao tempo de serviço</strong>, até seu aproveitamento mandatório em outro cargo.</p>
+        <p>O servidor em disponibilidade tem o prazo de 30 dias para tomar posse no cargo para o qual foi aproveitado, sob pena de reversão à disponibilidade ou exoneração.</p>
+        <span class="art-tag">Arts. 41 CF e 30 Lei 8.112</span>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary><span class="q-text">O que é a pensão por morte e quem tem direito?</span><span class="chevron">▼</span></summary>
+      <div class="faq-body">
+        <p>A pensão por morte é benefício concedido aos dependentes do servidor falecido. Têm direito:</p>
+        <ul>
+          <li>Cônjuge, companheiro(a)</li>
+          <li>Filhos menores de 21 anos (ou inválidos/com deficiência)</li>
+          <li>Pais (se o servidor não deixou cônjuge, companheiro ou filho)</li>
+          <li>Irmão menor de 21 anos (nas mesmas condições anteriores)</li>
+        </ul>
+        <p>O valor é calculado conforme as regras do RPPS e da EC 41/2003.</p>
+        <span class="art-tag">Arts. 215 a 225</span>
+      </div>
+    </details>
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Lei nº 8.112, de 11 de dezembro de 1990</strong> — Dispõe sobre o regime jurídico dos servidores públicos civis da União, das autarquias e das fundações públicas federais.</p>
+  <p style="margin-top:8px">Este FAQ tem caráter informativo. Para casos concretos, consulte a legislação vigente e o setor de Recursos Humanos do seu órgão.</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) item.classList.add('open');
+      else item.classList.remove('open');
+    });
+  });
+
+  const searchInput = document.getElementById('search');
+  const noResults = document.getElementById('no-results');
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      item.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    document.querySelectorAll('.section').forEach(sec => {
+      const anyVisible = [...sec.querySelectorAll('.faq-item')]
+        .some(i => i.style.display !== 'none');
+      sec.style.display = anyVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  });
+
+  document.getElementById('cats').addEventListener('click', e => {
+    const btn = e.target.closest('.cat-btn');
+    if (!btn) return;
+
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cat = btn.dataset.cat;
+
+    searchInput.value = '';
+    document.querySelectorAll('.faq-item').forEach(i => i.style.display = '');
+
+    document.querySelectorAll('.section').forEach(sec => {
+      if (cat === 'all') {
+        sec.style.display = '';
+      } else {
+        sec.style.display = sec.dataset.cat === cat ? '' : 'none';
+      }
+    });
+
+    noResults.style.display = 'none';
+  });
+</script>
+</body>
+</html>
